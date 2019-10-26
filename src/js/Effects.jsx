@@ -24,7 +24,7 @@ class Effects extends Component {
 
     setInterval(() => {
       getUser();
-    }, 30000);
+    }, 5000);
   }
 
   render() {

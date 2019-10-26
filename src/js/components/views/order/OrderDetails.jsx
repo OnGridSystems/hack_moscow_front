@@ -13,7 +13,7 @@ export default function OrderDetails({ order, ...props }) {
       {order.id && (
         <div className="TxnInfo_property">
           <div className="TxnInfo_label">Delivery ID:</div>
-          <div className="TxnInfo_value">{order.id}</div>
+          <div className="TxnInfo_value">{`00000${order.id}`}</div>
         </div>
       )}
       {order.status && (
