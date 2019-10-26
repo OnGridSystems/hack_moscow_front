@@ -23,7 +23,9 @@ export default function DeliveryOrders({ orders, type, showModal, takeOrder, ava
   };
 
   if (!orders || orders.length === 0) {
-    return null;
+    return (
+      <NoOrders>No orders</NoOrders>
+    );
   }
 
   return (
@@ -118,5 +120,17 @@ const InputWrapper = styled.div`
 const StyledButton = styled(Button)`
   &:not(:last-of-type) {
     margin-right: 5px;
+  }
+`;
+
+const NoOrders = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 100%;
+  background: #f2f2f2;
+  ${media.xs} {
+    height: 50px;
   }
 `;
