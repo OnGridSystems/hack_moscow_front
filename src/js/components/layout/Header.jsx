@@ -22,13 +22,16 @@ const mapDispatchToProps = dispatch => ({
 });
 
 @withRouter
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)
 class Header extends Component {
   handleLogout = () => {
     const { handleLogout } = this.props;
 
     handleLogout();
-  }
+  };
 
   render() {
     const { isAuthorized } = this.props;
@@ -40,10 +43,10 @@ class Header extends Component {
         </HeaderLeft>
         <HeaderRight>
           {isAuthorized && (
-          <Logout onClick={this.handleLogout}>
-            <span>Logout</span>
-            <StyledLogoutIcon />
-          </Logout>
+            <Logout onClick={this.handleLogout}>
+              <span>Logout</span>
+              <StyledLogoutIcon />
+            </Logout>
           )}
         </HeaderRight>
       </Wrapper>

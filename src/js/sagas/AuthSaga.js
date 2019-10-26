@@ -50,10 +50,7 @@ export class AuthSaga {
       // });
       // AuthService.unsetJWT();
 
-      yield all([
-        put(AuthActions.unsetAuthStatus()),
-        put(AuthActions.logoutSuccess()),
-      ]);
+      yield all([put(AuthActions.unsetAuthStatus()), put(AuthActions.logoutSuccess())]);
     } catch (e) {
       yield put(AuthActions.logoutFail());
     }

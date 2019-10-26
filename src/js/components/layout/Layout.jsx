@@ -12,6 +12,7 @@ import Header from 'js/components/layout/Header';
 import Modal from 'js/components/modals/Modal';
 import Dashboard from 'js/components/views/dashboard/Dashboard';
 import Authorization from 'js/components/views/auth/Authorization';
+import Order from 'js/components/views/order/Order';
 
 
 const mapStateToProps = ({ UI, Auth }) => ({
@@ -64,6 +65,7 @@ class Layout extends Component {
         <Body>
           <Switch>
             {!isAuthorized && <Route component={Authorization} exact path="/auth" />}
+            <Route component={Order} exact path="/order" />
             <PrivateRoute component={Dashboard} exact path="/" />
             <Redirect to={redirectPath} />
           </Switch>
@@ -85,6 +87,8 @@ const MainWrapper = styled.div`
 const Body = styled.div`
   background: #f4f4f4;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1;
   justify-content: center;
 `;

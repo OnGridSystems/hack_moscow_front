@@ -6,7 +6,6 @@ import styled, { keyframes } from 'styled-components';
 
 // import Auth from 'js/components/auth/Auth';
 
-
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = () => ({});
@@ -17,9 +16,7 @@ const mapDispatchToProps = () => ({});
 )
 class Dropdown extends Component {
   render() {
-    return (
-      <Wrapper />
-    );
+    return <Wrapper />;
   }
 }
 

@@ -38,6 +38,14 @@ const GlobalStyles = createGlobalStyle`
       display: none !important;
     }
   }
+
+  th {
+    vertical-align: middle !important;
+  }
+
+  td {
+    vertical-align: middle !important;
+  }
 `;
 
 export default GlobalStyles;
