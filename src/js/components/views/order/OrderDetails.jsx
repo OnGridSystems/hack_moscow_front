@@ -20,6 +20,10 @@ export default function OrderDetails({ order, ...props }) {
         <div className="TxnInfo_value">1</div>
       </div>
       <div className="TxnInfo_property">
+        <div className="TxnInfo_label">Status:</div>
+        <div className="TxnInfo_value">On the way</div>
+      </div>
+      <div className="TxnInfo_property">
         <div className="TxnInfo_label">From address:</div>
         <div className="TxnInfo_value">Russia, Moscow, Dmitrovskoe shosse, 9</div>
       </div>

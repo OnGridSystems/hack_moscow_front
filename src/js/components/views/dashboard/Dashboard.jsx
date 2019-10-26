@@ -32,6 +32,12 @@ const mapDispatchToProps = dispatch => ({
   mapDispatchToProps,
 )
 class Dashboard extends Component {
+  handleNewDelivery = () => {
+    const { showModal } = this.props;
+
+    showModal({ type: 'newDelivery', options: { title: 'New delivery', data: { id: 1 } } });
+  };
+
   render() {
     const { role, showModal, takeOrder } = this.props;
 
@@ -96,15 +102,19 @@ class Dashboard extends Component {
             </DivTable>
           )}
         </Section>
-        <Section>
-          <SectionTitle>Current orders:</SectionTitle>
-          <DeliveryOrders orders={[]} showModal={showModal} takeOrder={takeOrder} />
-        </Section>
+        {role === 'carrier' && (
+          <Section>
+            <SectionTitle>Current orders:</SectionTitle>
+            <DeliveryOrders orders={[]} showModal={showModal} takeOrder={takeOrder} />
+          </Section>
+        )}
         <Section>
           <SectionTitle>{role === 'shipper' ? 'Delivery orders' : 'Orders to take'}</SectionTitle>
           {role === 'shipper' && (
             <NewDelivery>
-              <Button>+ New delivery</Button>
+              <Button onClick={this.handleNewDelivery} size="sm">
+                + New delivery
+              </Button>
             </NewDelivery>
           )}
           <DeliveryOrders
@@ -114,10 +124,12 @@ class Dashboard extends Component {
             takeOrder={takeOrder}
           />
         </Section>
-        <Section>
-          <SectionTitle>Last delivered orders:</SectionTitle>
-          <DeliveryOrders orders={[]} showModal={showModal} />
-        </Section>
+        {role === 'carrier' && (
+          <Section>
+            <SectionTitle>Last delivered orders:</SectionTitle>
+            <DeliveryOrders orders={[]} showModal={showModal} />
+          </Section>
+        )}
       </Wrapper>
     );
   }

@@ -23,6 +23,32 @@ function getValidationSchema(schemaName) {
       username: Yup.string().required('This field is required!'),
       password: Yup.string().required('This field is required!'),
     },
+    newDeliveryStepOne: {
+      coverage: Yup.number()
+        .required('This field is required!')
+        .notZero('This field is required!'),
+    },
+    newDeliveryStepTwo: {
+      pickupLocation: Yup.string().required('This field is required!'),
+      destination: Yup.string().required('This field is required!'),
+      dimensions: Yup.string().required('This field is required!'),
+      weight: Yup.number()
+        .required('This field is required!')
+        .notZero('This field is required!'),
+      shipmentDate: Yup.string().required('This field is required!'),
+      deliveryDate: Yup.string().required('This field is required!'),
+    },
+    registerShipper: {
+      username: Yup.string().required('This field is required!'),
+      password: Yup.string().required('This field is required!'),
+      location: Yup.string().required('This field is required!'),
+    },
+    registerCarrier: {
+      username: Yup.string().required('This field is required!'),
+      password: Yup.string().required('This field is required!'),
+      vehicle: Yup.string().required('This field is required!'),
+      maxLoad: Yup.number().required('This field is required!').notZero('This field is required!'),
+    },
   };
 
   if (!schemas[schemaName]) throw new Error(`${schemaName} validation schema doesn't exist!`);

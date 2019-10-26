@@ -13,9 +13,7 @@ import PageTitle from 'js/components/common/PageTitle';
 import OrderDetails from 'js/components/views/order/OrderDetails';
 
 
-const mapStateToProps = ({ User }) => ({
-
-});
+const mapStateToProps = ({ User }) => ({});
 
 const mapDispatchToProps = dispatch => ({
   confirmDelivery(payload) {
@@ -32,7 +30,7 @@ class Dashboard extends Component {
     const { confirmDelivery } = this.props;
 
     confirmDelivery();
-  }
+  };
 
   render() {
     const { role, showModal, takeOrder } = this.props;

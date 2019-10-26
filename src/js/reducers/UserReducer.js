@@ -6,7 +6,7 @@ import * as actions from 'js/actions/UserActions';
 
 const initialState = Map({
   username: '',
-  role: 'carrier',
+  role: 'shipper',
 });
 
 const UserReducer = createReducer(

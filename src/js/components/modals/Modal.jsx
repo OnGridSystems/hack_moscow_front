@@ -5,7 +5,8 @@ import styled from 'styled-components';
 
 import * as UIActions from 'js/actions/UIActions';
 
-import SimpleModal from 'js/components/modals/SimpleModal';
+import OrderModal from 'js/components/modals/OrderModal';
+import NewDeliveryModal from 'js/components/modals/NewDeliveryModal';
 
 
 const mapStateToProps = ({ UI }) => ({
@@ -30,8 +31,10 @@ class Modal extends Component {
 
   renderModal = (type) => {
     switch (type) {
-      case 'simple':
-        return <SimpleModal />;
+      case 'order':
+        return <OrderModal />;
+      case 'newDelivery':
+        return <NewDeliveryModal />;
       default:
         return null;
     }

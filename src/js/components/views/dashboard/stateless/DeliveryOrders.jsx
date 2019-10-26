@@ -10,11 +10,11 @@ import DivTable from 'js/components/common/DivTable';
 
 export default function DeliveryOrders({ orders, type, showModal, takeOrder }) {
   const handleShowModal = () => {
-    showModal({ type: 'simple', options: { title: 'Order details', data: { id: 1 } } });
+    showModal({ type: 'order', options: { title: 'Order details', data: { id: 1 } } });
   };
 
   const handleTakeOrder = () => {
-    takeOrder({ type: 'simple', options: { title: 'Order details', data: { id: 1 } } });
+    takeOrder({ type: 'order', options: { title: 'Order details', data: { id: 1 } } });
   };
 
   return (
@@ -88,7 +88,9 @@ export default function DeliveryOrders({ orders, type, showModal, takeOrder }) {
                     Take
                   </StyledButton>
                 )}
-                <StyledButton size="sm" onClick={handleShowModal}>Details</StyledButton>
+                <StyledButton size="sm" onClick={handleShowModal}>
+                  Details
+                </StyledButton>
               </InputWrapper>
             </td>
           </tr>
@@ -114,7 +116,9 @@ export default function DeliveryOrders({ orders, type, showModal, takeOrder }) {
                     Take
                   </StyledButton>
                 )}
-                <StyledButton size="sm" onClick={handleShowModal}>Details</StyledButton>
+                <StyledButton size="sm" onClick={handleShowModal}>
+                  Details
+                </StyledButton>
               </InputWrapper>
             </td>
           </tr>

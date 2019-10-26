@@ -9,5 +9,9 @@ export const logoutRequest = createAction('LOGOUT_REQUEST');
 export const logoutSuccess = createAction('LOGOUT_SUCCESS');
 export const logoutFail = createAction('LOGOUT_FAIL');
 
+export const registerRequest = createAction('REGISTER_REQUEST');
+export const registerSuccess = createAction('REGISTER_SUCCESS');
+export const registerFail = createAction('REGISTER_FAIL');
+
 export const unsetAuthStatus = createAction('UNSET_AUTH_STATUS');
 export const setAuthStatus = createAction('SET_AUTH_STATUS');

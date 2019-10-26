@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
+import { Link } from 'react-router-dom';
 
 import getValidationSchema from 'js/utils/getValidationSchema';
 import createFormikField from 'js/components/common/hoc/createFormikField';
@@ -77,6 +78,7 @@ class Login extends Component {
 
     return (
       <Wrapper>
+        <Title>Authorization</Title>
         <Formik
           initialValues={initialValues}
           validationSchema={getValidationSchema('login')}
@@ -116,6 +118,9 @@ class Login extends Component {
             </Form>
           )}
         />
+        <RegistrationWrapper>
+          <Link to="/auth/register">Registration</Link>
+        </RegistrationWrapper>
       </Wrapper>
     );
   }
@@ -157,4 +162,18 @@ const StyledButton = styled(Button)`
 const NotificationWrapper = styled.div`
   width: 100%;
   padding: 15px 0;
+`;
+
+const RegistrationWrapper = styled.div`
+  margin-top: 30px;
+  text-align: center;
+`;
+
+const Title = styled.h2`
+  text-align: center;
+  font-size: 24px;
+  font-weight: normal;
+  border-bottom: 2px solid #d5dcef;
+  margin-bottom: 25px;
+  padding-bottom: 5px;
 `;

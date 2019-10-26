@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { media } from 'js/constants/media';
 
 import Login from 'js/components/views/auth/Login';
+import Register from 'js/components/views/auth/Register';
 
 
 const mapStateToProps = ({ Auth }) => ({
@@ -23,10 +25,13 @@ class Authorization extends Component {
 
     return (
       <Wrapper>
-        <LoginInner>
-          <Title>Authorization</Title>
-          <Login />
-        </LoginInner>
+        <AuthInner>
+          <Switch>
+            <Route component={Login} exact path="/auth" />
+            <Route component={Register} exact path="/auth/register" />
+            <Redirect to="/auth" />
+          </Switch>
+        </AuthInner>
       </Wrapper>
     );
   }
@@ -43,8 +48,8 @@ const Wrapper = styled.div`
   background: #f4f4f4;
 `;
 
-const LoginInner = styled.div`
-  padding: 35px 40px 50px 40px;
+const AuthInner = styled.div`
+  padding: 35px 40px 30px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,12 +62,4 @@ const LoginInner = styled.div`
   ${media.xs} {
     transform: unset;
   }
-`;
-
-const Title = styled.h2`
-  font-size: 24px;
-  font-weight: normal;
-  border-bottom: 2px solid #d5dcef;
-  margin-bottom: 25px;
-  padding-bottom: 5px;
 `;

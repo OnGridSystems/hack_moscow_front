@@ -55,9 +55,32 @@ export class AuthSaga {
       yield put(AuthActions.logoutFail());
     }
   }
+
+  static* register(action) {
+    try {
+      // const response = yield call(axios, {
+      //   method: 'POST',
+      //   url: API.register(),
+      //   data: {
+      //     username: action.payload.username,
+      //     password: action.payload.password,
+      //   },
+      // });
+      // AuthService.setJWT(response.data.token);
+
+      yield all([
+        put(AuthActions.setAuthStatus()),
+        put(AuthActions.registerSuccess()),
+        // put(UserActions.getUserRequest()),
+      ]);
+    } catch (e) {
+      yield put(AuthActions.registerFail());
+    }
+  }
 }
 
 export function* saga() {
   yield takeEvery(AuthActions.loginRequest, AuthSaga.login);
   yield takeEvery(AuthActions.logoutRequest, AuthSaga.logout);
+  yield takeEvery(AuthActions.registerRequest, AuthSaga.register);
 }

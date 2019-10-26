@@ -12,6 +12,7 @@ import Header from 'js/components/layout/Header';
 import Modal from 'js/components/modals/Modal';
 import Dashboard from 'js/components/views/dashboard/Dashboard';
 import Authorization from 'js/components/views/auth/Authorization';
+import Register from 'js/components/views/auth/Register';
 import Order from 'js/components/views/order/Order';
 
 
@@ -64,7 +65,7 @@ class Layout extends Component {
         />
         <Body>
           <Switch>
-            {!isAuthorized && <Route component={Authorization} exact path="/auth" />}
+            {!isAuthorized && <Route component={Authorization} path="/auth" />}
             <Route component={Order} exact path="/order" />
             <PrivateRoute component={Dashboard} exact path="/" />
             <Redirect to={redirectPath} />

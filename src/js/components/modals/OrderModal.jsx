@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
   mapStateToProps,
   mapDispatchToProps,
 )
-class SimpleModal extends Component {
+class OrderModal extends Component {
   static propTypes = {
     modalOptions: PropTypes.object.isRequired,
 
@@ -50,7 +50,7 @@ class SimpleModal extends Component {
   }
 }
 
-export default SimpleModal;
+export default OrderModal;
 
 const ModalContent = styled.div`
   padding: 50px;
