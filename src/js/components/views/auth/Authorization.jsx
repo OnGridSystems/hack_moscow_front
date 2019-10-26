@@ -9,9 +9,7 @@ import Login from 'js/components/views/auth/Login';
 import Register from 'js/components/views/auth/Register';
 
 
-const mapStateToProps = ({ Auth }) => ({
-  isAuthorized: Auth.get('isAuthorized'),
-});
+const mapStateToProps = ({ Auth }) => ({});
 
 const mapDispatchToProps = () => ({});
 
@@ -21,8 +19,6 @@ const mapDispatchToProps = () => ({});
 )
 class Authorization extends Component {
   render() {
-    // const { isAuthorized } = this.props;
-
     return (
       <Wrapper>
         <AuthInner>
@@ -46,6 +42,7 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   background: #f4f4f4;
+  overflow: auto;
 `;
 
 const AuthInner = styled.div`
@@ -56,10 +53,6 @@ const AuthInner = styled.div`
   align-items: center;
   width: 400px;
   background: #fff;
-  margin: 0 25px;
+  margin: 25px;
   border-radius: 7px;
-  transform: translateY(-50px);
-  ${media.xs} {
-    transform: unset;
-  }
 `;

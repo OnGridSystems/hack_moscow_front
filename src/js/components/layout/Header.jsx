@@ -89,6 +89,10 @@ const LogoWithLink = styled(Link)`
   font-weight: bold;
   font-size: 18px;
   letter-spacing: 0.08em;
+  &:hover {
+    color: #fff !important;
+    text-decoration: none !important;
+  }
 `;
 
 const Logout = styled.div`

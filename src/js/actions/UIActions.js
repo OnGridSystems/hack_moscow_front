@@ -9,5 +9,8 @@ export const hideMobileSidebar = createAction('HIDE_MOBILE_SIDEBAR');
 export const showDropdown = createAction('SHOW_DROPDOWN');
 export const hideDropdown = createAction('HIDE_DROPDOWN');
 
+export const showPreloader = createAction('SHOW_PRELOADER');
+export const hidePreloader = createAction('HIDE_PRELOADER');
+
 export const showModal = createAction('SHOW_MODAL');
 export const hideModal = createAction('HIDE_MODAL');

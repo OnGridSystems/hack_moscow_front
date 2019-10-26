@@ -5,7 +5,6 @@ import UIReducer from './UIReducer';
 import AuthReducer from './AuthReducer';
 import UserReducer from './UserReducer';
 import NotificationReducer from './NotificationReducer';
-import ConfigReducer from './ConfigReducer';
 import OrderReducer from './OrderReducer';
 
 
@@ -15,7 +14,6 @@ const reducers = combineReducers({
   Auth: AuthReducer,
   User: UserReducer,
   Notifications: NotificationReducer,
-  Config: ConfigReducer,
   Orders: OrderReducer,
 });
 

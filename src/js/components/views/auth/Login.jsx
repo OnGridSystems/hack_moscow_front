@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
 
@@ -37,14 +36,6 @@ const mapDispatchToProps = dispatch => ({
   mapDispatchToProps,
 )
 class Login extends Component {
-  static propTypes = {
-    notification: PropTypes.object.isRequired,
-    process: PropTypes.string.isRequired,
-
-    loginRequest: PropTypes.func.isRequired,
-    clearNotification: PropTypes.func.isRequired,
-  };
-
   componentWillUnmount() {
     this.handleClearNotification();
   }

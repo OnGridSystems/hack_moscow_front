@@ -24,13 +24,13 @@ const DivTable = styled.div`
     line-height: 30px;
     white-space: nowrap;
     ${media.xs} {
-      line-height: 16px;
+      line-height: 18px;
       font-size: 12px;
     }
   }
   .TxnInfo_value {
     padding-left: 16px;
-    line-height: 16px;
+    line-height: 18px;
     ${media.md} {
       word-break: break-all;
     }

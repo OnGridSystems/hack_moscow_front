@@ -37,6 +37,7 @@ function getValidationSchema(schemaName) {
         .notZero('This field is required!'),
       shipmentDate: Yup.string().required('This field is required!'),
       deliveryDate: Yup.string().required('This field is required!'),
+      phone: Yup.string().required('This field is required!'),
     },
     registerShipper: {
       username: Yup.string().required('This field is required!'),
@@ -47,7 +48,9 @@ function getValidationSchema(schemaName) {
       username: Yup.string().required('This field is required!'),
       password: Yup.string().required('This field is required!'),
       vehicle: Yup.string().required('This field is required!'),
-      maxLoad: Yup.number().required('This field is required!').notZero('This field is required!'),
+      maxLoad: Yup.number()
+        .required('This field is required!')
+        .notZero('This field is required!'),
     },
   };
 

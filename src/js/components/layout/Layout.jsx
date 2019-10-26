@@ -8,6 +8,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import * as UIActions from 'js/actions/UIActions';
 
 import PrivateRoute from 'js/components/common/PrivateRoute';
+import Loader from 'js/components/common/Loader';
 import Header from 'js/components/layout/Header';
 import Modal from 'js/components/modals/Modal';
 import Dashboard from 'js/components/views/dashboard/Dashboard';
@@ -21,6 +22,7 @@ const mapStateToProps = ({ UI, Auth }) => ({
   isDropdownOpened: UI.get('isDropdownOpened'),
   isModalOpened: UI.get('isModalOpened'),
   isAuthorized: Auth.get('isAuthorized'),
+  isPreloaderActive: UI.get('isPreloaderActive'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -53,12 +55,18 @@ class Layout extends Component {
   };
 
   render() {
-    const { isModalOpened, isAuthorized } = this.props;
+    const { isModalOpened, isAuthorized, isPreloaderActive } = this.props;
 
     const redirectPath = isAuthorized ? '/' : '/auth';
 
     return (
       <MainWrapper>
+        {isPreloaderActive
+        && (
+        <PreloaderWrapper>
+          <Loader size={100} />
+        </PreloaderWrapper>
+        )}
         <Header
           handleToggleMobileSidebar={this.handleToggleMobileSidebar}
           handleToggleDropdown={this.handleToggleDropdown}
@@ -92,4 +100,14 @@ const Body = styled.div`
   align-items: center;
   flex: 1;
   justify-content: center;
+`;
+
+const PreloaderWrapper = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

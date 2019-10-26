@@ -1,68 +1,99 @@
 import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { Table, Button } from 'react-bootstrap';
-
-import { media } from 'js/constants/media';
 
 import DivTable from 'js/components/common/DivTable';
 
 
 export default function OrderDetails({ order, ...props }) {
-  // const handleShowModal = () => {
-  //   showModal({ type: 'simple', options: { title: 'Order details', data: { id: 1 } } });
-  // };
+  if (!order) {
+    return null;
+  }
 
   return (
     <DivTable {...props}>
+      {order.id && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">Delivery ID:</div>
+          <div className="TxnInfo_value">{order.id}</div>
+        </div>
+      )}
+      {order.status && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">Status:</div>
+          <div className="TxnInfo_value">{order.status}</div>
+        </div>
+      )}
+      {order.pickupLocation && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">From address:</div>
+          <div className="TxnInfo_value">{order.pickupLocation}</div>
+        </div>
+      )}
+      {order.destination && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">To address:</div>
+          <div className="TxnInfo_value">{order.destination}</div>
+        </div>
+      )}
+      {order.distance && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">Distance:</div>
+          <div className="TxnInfo_value">{order.distance}</div>
+        </div>
+      )}
+      {order.dimensions && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">Dimensions:</div>
+          <div className="TxnInfo_value">{order.dimensions}</div>
+        </div>
+      )}
+      {order.weight && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">Weight:</div>
+          <div className="TxnInfo_value">{order.weight}</div>
+        </div>
+      )}
+      {order.coverage && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">Coverage:</div>
+          <div className="TxnInfo_value">{order.coverage}</div>
+        </div>
+      )}
+      {order.reward && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">Reward:</div>
+          <div className="TxnInfo_value">{order.reward}</div>
+        </div>
+      )}
+      {order.shipmentDate && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">Shipment date:</div>
+          <div className="TxnInfo_value">{order.shipmentDate}</div>
+        </div>
+      )}
+      {order.deliveryDate && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">Delivery date:</div>
+          <div className="TxnInfo_value">{order.deliveryDate}</div>
+        </div>
+      )}
+      {order.carrier && (
+        <div className="TxnInfo_property">
+          <div className="TxnInfo_label">Carrier:</div>
+          <div className="TxnInfo_value">{order.carrier}</div>
+        </div>
+      )}
+      {order.phone && (
       <div className="TxnInfo_property">
-        <div className="TxnInfo_label">Delivery ID:</div>
-        <div className="TxnInfo_value">1</div>
+        <div className="TxnInfo_label">Reciever phone:</div>
+        <div className="TxnInfo_value">{order.phone}</div>
       </div>
+      )}
+      {order.orderSecret && (
       <div className="TxnInfo_property">
-        <div className="TxnInfo_label">Status:</div>
-        <div className="TxnInfo_value">On the way</div>
+        <div className="TxnInfo_label">Track link:</div>
+        <div className="TxnInfo_value">{`${window.location.origin}/order?secret=${order.orderSecret}`}</div>
       </div>
-      <div className="TxnInfo_property">
-        <div className="TxnInfo_label">From address:</div>
-        <div className="TxnInfo_value">Russia, Moscow, Dmitrovskoe shosse, 9</div>
-      </div>
-      <div className="TxnInfo_property">
-        <div className="TxnInfo_label">To address:</div>
-        <div className="TxnInfo_value">Savyolkinsky drive 4</div>
-      </div>
-      <div className="TxnInfo_property">
-        <div className="TxnInfo_label">Distance:</div>
-        <div className="TxnInfo_value">135km</div>
-      </div>
-      <div className="TxnInfo_property">
-        <div className="TxnInfo_label">Dimensions:</div>
-        <div className="TxnInfo_value">12x10x5</div>
-      </div>
-      <div className="TxnInfo_property">
-        <div className="TxnInfo_label">Weight:</div>
-        <div className="TxnInfo_value">1kg</div>
-      </div>
-      <div className="TxnInfo_property">
-        <div className="TxnInfo_label">Coverage:</div>
-        <div className="TxnInfo_value">100$</div>
-      </div>
-      <div className="TxnInfo_property">
-        <div className="TxnInfo_label">Reward:</div>
-        <div className="TxnInfo_value">10$</div>
-      </div>
-      <div className="TxnInfo_property">
-        <div className="TxnInfo_label">Shipment date:</div>
-        <div className="TxnInfo_value">01.01.2019</div>
-      </div>
-      <div className="TxnInfo_property">
-        <div className="TxnInfo_label">Delivery date:</div>
-        <div className="TxnInfo_value">01.01.2019</div>
-      </div>
-      <div className="TxnInfo_property">
-        <div className="TxnInfo_label">Carrier:</div>
-        <div className="TxnInfo_value">Some carrier</div>
-      </div>
+      )}
     </DivTable>
   );
 }

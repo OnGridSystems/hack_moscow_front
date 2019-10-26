@@ -13,20 +13,20 @@ import * as NotificationActions from 'js/actions/NotificationActions';
 export class AuthSaga {
   static* login(action) {
     try {
-      // const response = yield call(axios, {
-      //   method: 'POST',
-      //   url: API.login(),
-      //   data: {
-      //     username: action.payload.username,
-      //     password: action.payload.password,
-      //   },
-      // });
-      // AuthService.setJWT(response.data.token);
+      const response = yield call(axios, {
+        method: 'POST',
+        url: API.login(),
+        data: {
+          username: action.payload.username,
+          password: action.payload.password,
+        },
+      });
+      AuthService.setJWT(response.data.token);
 
       yield all([
         put(AuthActions.setAuthStatus()),
         put(AuthActions.loginSuccess()),
-        // put(UserActions.getUserRequest()),
+        put(UserActions.getUserRequest()),
       ]);
     } catch (e) {
       yield put(AuthActions.loginFail());
@@ -44,11 +44,7 @@ export class AuthSaga {
 
   static* logout() {
     try {
-      // yield call(axios, {
-      //   method: 'POST',
-      //   url: API.logout(),
-      // });
-      // AuthService.unsetJWT();
+      AuthService.unsetJWT();
 
       yield all([put(AuthActions.unsetAuthStatus()), put(AuthActions.logoutSuccess())]);
     } catch (e) {
@@ -58,23 +54,31 @@ export class AuthSaga {
 
   static* register(action) {
     try {
-      // const response = yield call(axios, {
-      //   method: 'POST',
-      //   url: API.register(),
-      //   data: {
-      //     username: action.payload.username,
-      //     password: action.payload.password,
-      //   },
-      // });
-      // AuthService.setJWT(response.data.token);
+      const response = yield call(axios, {
+        method: 'POST',
+        url: API.register(),
+        data: {
+          ...action.payload,
+        },
+      });
+      AuthService.setJWT(response.data.token);
 
       yield all([
         put(AuthActions.setAuthStatus()),
         put(AuthActions.registerSuccess()),
-        // put(UserActions.getUserRequest()),
+        put(UserActions.getUserRequest()),
       ]);
     } catch (e) {
       yield put(AuthActions.registerFail());
+
+      yield delay(300);
+      yield put(
+        NotificationActions.setNotification({
+          module: 'register',
+          type: 'error',
+          message: e.message,
+        }),
+      );
     }
   }
 }

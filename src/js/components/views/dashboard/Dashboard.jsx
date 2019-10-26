@@ -14,8 +14,21 @@ import DeliveryOrders from 'js/components/views/dashboard/stateless/DeliveryOrde
 import DivTable from 'js/components/common/DivTable';
 
 
-const mapStateToProps = ({ User }) => ({
+const mapStateToProps = ({ User, Orders }) => ({
+  userOrders: Orders.get('userOrders'),
+  availableOrders: Orders.get('availableOrders'),
+
+  username: User.get('username'),
   role: User.get('role'),
+  balance: User.get('balance'),
+  location: User.get('location'),
+
+  smartContract: User.get('smartContract'),
+  vehicle: User.get('vehicle'),
+  totalBalance: User.get('totalBalance'),
+  lockedBalance: User.get('lockedBalance'),
+  availableBalance: User.get('availableBalance'),
+  maxLoad: User.get('maxLoad'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -39,96 +52,121 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { role, showModal, takeOrder } = this.props;
+    const {
+      userOrders,
+      availableOrders,
+      username,
+      role,
+      balance,
+      location,
+      smartContract,
+      vehicle,
+      totalBalance,
+      lockedBalance,
+      availableBalance,
+      maxLoad,
+      showModal,
+      takeOrder,
+    } = this.props;
 
     return (
       <Wrapper>
         <PageTitle>Dashboard</PageTitle>
         <Section>
           <SectionTitle>Your profile:</SectionTitle>
-          {role === 'shipper' && (
+          {role === 'SHIPPER' && (
             <DivTable>
               <div className="TxnInfo_property">
                 <div className="TxnInfo_label">Name:</div>
-                <div className="TxnInfo_value">Shipper LTD</div>
+                <div className="TxnInfo_value">{username}</div>
               </div>
               <div className="TxnInfo_property">
                 <div className="TxnInfo_label">Location:</div>
-                <div className="TxnInfo_value">Russia, Moscow, Dmitrovskoe shosse, 9</div>
+                <div className="TxnInfo_value">{location}</div>
               </div>
               <div className="TxnInfo_property">
                 <div className="TxnInfo_label">Balance:</div>
-                <div className="TxnInfo_value">100 USD</div>
+                <div className="TxnInfo_value">{`${balance} USD`}</div>
               </div>
             </DivTable>
           )}
-          {role === 'carrier' && (
+          {role === 'CARRIER' && (
             <DivTable>
               <div className="TxnInfo_property">
                 <div className="TxnInfo_label">Carrier:</div>
-                <div className="TxnInfo_value">Some carrier</div>
+                <div className="TxnInfo_value">{username}</div>
               </div>
               <div className="TxnInfo_property">
                 <div className="TxnInfo_label">Vehicle:</div>
-                <div className="TxnInfo_value">VW Transporter 2.0 TDI</div>
+                <div className="TxnInfo_value">{vehicle}</div>
               </div>
               <div className="TxnInfo_property">
                 <div className="TxnInfo_label">Max load:</div>
-                <div className="TxnInfo_value">1300kg</div>
+                <div className="TxnInfo_value">{`${maxLoad} kg`}</div>
               </div>
               <div className="TxnInfo_property">
                 <div className="TxnInfo_label">Total balance:</div>
-                <div className="TxnInfo_value">100 USD</div>
+                <div className="TxnInfo_value">{`${totalBalance} USD`}</div>
               </div>
               <div className="TxnInfo_property">
                 <div className="TxnInfo_label">Locked balance:</div>
-                <div className="TxnInfo_value">10 USD</div>
+                <div className="TxnInfo_value">{`${lockedBalance} USD`}</div>
               </div>
               <div className="TxnInfo_property">
                 <div className="TxnInfo_label">Available balance:</div>
-                <div className="TxnInfo_value">90 USD</div>
+                <div className="TxnInfo_value">{`${availableBalance} USD`}</div>
               </div>
               <div className="TxnInfo_property">
                 <div className="TxnInfo_label">Smart contract:</div>
                 <div className="TxnInfo_value">
-                  <a href="https://etherscan.io/address/0x32A3256a4b15BadD4a6e072A03d23404d925a5CF">
-                    <span className="hidden-xs">0x32A3256a4b15BadD4a6e072A03d23404d925a5CF</span>
-                    <span className="hidden-smPlus">
-                      {cropTxnHash('0x32A3256a4b15BadD4a6e072A03d23404d925a5CF', 16)}
-                    </span>
+                  <a href={`https://etherscan.io/address/${smartContract}`}>
+                    <span className="hidden-xs">{smartContract}</span>
+                    <span className="hidden-smPlus">{cropTxnHash(smartContract, 16)}</span>
                   </a>
                 </div>
               </div>
             </DivTable>
           )}
         </Section>
-        {role === 'carrier' && (
+        {role === 'SHIPPER' && (
           <Section>
-            <SectionTitle>Current orders:</SectionTitle>
-            <DeliveryOrders orders={[]} showModal={showModal} takeOrder={takeOrder} />
-          </Section>
-        )}
-        <Section>
-          <SectionTitle>{role === 'shipper' ? 'Delivery orders' : 'Orders to take'}</SectionTitle>
-          {role === 'shipper' && (
+            <SectionTitle>Delivery orders</SectionTitle>
             <NewDelivery>
               <Button onClick={this.handleNewDelivery} size="sm">
                 + New delivery
               </Button>
             </NewDelivery>
-          )}
-          <DeliveryOrders
-            orders={[]}
-            showModal={showModal}
-            type={role === 'shipper' ? 'current' : 'take'}
-            takeOrder={takeOrder}
-          />
-        </Section>
-        {role === 'carrier' && (
-          <Section>
-            <SectionTitle>Last delivered orders:</SectionTitle>
-            <DeliveryOrders orders={[]} showModal={showModal} />
+            <DeliveryOrders orders={userOrders} showModal={showModal} />
           </Section>
+        )}
+        {role === 'CARRIER' && (
+          <>
+            <Section>
+              <SectionTitle>Orders to take:</SectionTitle>
+              <DeliveryOrders
+                orders={availableOrders}
+                showModal={showModal}
+                takeOrder={takeOrder}
+                availableBalance={availableBalance}
+                type="take"
+              />
+            </Section>
+            <Section>
+              <SectionTitle>Current orders:</SectionTitle>
+              <DeliveryOrders
+                orders={userOrders.filter(order => order.status === 'ON_THE_WAY')}
+                showModal={showModal}
+                takeOrder={takeOrder}
+              />
+            </Section>
+            <Section>
+              <SectionTitle>Last delivered orders:</SectionTitle>
+              <DeliveryOrders
+                orders={userOrders.filter(order => order.status === 'DELIVERED')}
+                showModal={showModal}
+              />
+            </Section>
+          </>
         )}
       </Wrapper>
     );
@@ -144,9 +182,11 @@ const Wrapper = styled.div`
   box-shadow: 0 10px 21px 0 rgba(173, 182, 217, 0.3);
   background: #fff;
   height: 100%;
+  min-width: 800px;
   ${media.smMinus} {
     width: 100%;
     margin: 0;
+    min-width: unset;
   }
   ${media.xs} {
     padding: 30px;

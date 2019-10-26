@@ -21,6 +21,7 @@ const FormikField = createFormikField(TextBox);
 
 const mapStateToProps = ({ Notifications, App }) => ({
   process: App.get('process'),
+  notification: Notifications.get('register'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -39,11 +40,21 @@ const mapDispatchToProps = dispatch => ({
 class Register extends Component {
   state = {
     role: 'SHIPPER',
-  }
+  };
+
+  handleClearNotification = () => {
+    const { notification, clearNotification } = this.props;
+
+    if (Object.keys(notification).length !== 0) {
+      clearNotification('register');
+    }
+  };
 
   handleRegister = (values) => {
-    const { registerRequest } = this.props;
+    const { registerRequest, clearNotification } = this.props;
     const { role } = this.state;
+
+    clearNotification('register');
 
     registerRequest({
       role,
@@ -62,7 +73,7 @@ class Register extends Component {
   };
 
   render() {
-    const { process } = this.props;
+    const { process, notification } = this.props;
     const { role } = this.state;
 
     return (
@@ -113,10 +124,10 @@ class Register extends Component {
                   </InputWrapper>
                 </InputSet>
                 <NotificationWrapper>
-                  <Notification data={{}} />
+                  <Notification data={notification} />
                 </NotificationWrapper>
                 <ButtonWrapper>
-                  <StyledButton type="submit" disabled={process === 'login'} inverted>
+                  <StyledButton type="submit" inverted>
                     Register
                   </StyledButton>
                 </ButtonWrapper>
@@ -173,10 +184,10 @@ class Register extends Component {
                   </InputWrapper>
                 </InputSet>
                 <NotificationWrapper>
-                  <Notification data={{}} />
+                  <Notification data={notification} />
                 </NotificationWrapper>
                 <ButtonWrapper>
-                  <StyledButton type="submit" disabled={process === 'login'} inverted>
+                  <StyledButton type="submit" inverted>
                     Register
                   </StyledButton>
                 </ButtonWrapper>
@@ -214,9 +225,6 @@ const ButtonWrapper = styled.div`
 const StyledFormikField = styled(FormikField)`
   div {
     font-size: 14px;
-  }
-  input {
-    height: 40px;
   }
 `;
 

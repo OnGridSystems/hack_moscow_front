@@ -2,20 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Table, Button } from 'react-bootstrap';
+import uuidv4 from 'uuid/v4';
 
 import { media } from 'js/constants/media';
 
 import DivTable from 'js/components/common/DivTable';
 
 
-export default function DeliveryOrders({ orders, type, showModal, takeOrder }) {
-  const handleShowModal = () => {
-    showModal({ type: 'order', options: { title: 'Order details', data: { id: 1 } } });
+export default function DeliveryOrders({ orders, type, showModal, takeOrder, availableBalance }) {
+  const handleShowDetails = (e) => {
+    const { id } = e.currentTarget;
+
+    showModal({ type: 'order', options: { title: 'Order details', data: orders[id] } });
   };
 
-  const handleTakeOrder = () => {
-    takeOrder({ type: 'order', options: { title: 'Order details', data: { id: 1 } } });
+  const handleTakeOrder = (e) => {
+    const { id } = e.currentTarget;
+
+    takeOrder(id);
   };
+
+  if (!orders || orders.length === 0) {
+    return null;
+  }
 
   return (
     <>
@@ -32,96 +41,65 @@ export default function DeliveryOrders({ orders, type, showModal, takeOrder }) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td className="hidden-xs">Carrier LTD</td>
-            <td className="hidden-xs">Zelenograd, Savyolkinsky drive, 4</td>
-            <td className="hidden-xs">1500$</td>
-            {type !== 'take' && <td>Not sent</td>}
-            <td>
-              <Button onClick={handleShowModal}>Details</Button>
-            </td>
-            {type === 'take' && (
+          {orders.map((order, index) => (
+            <tr key={uuidv4()}>
+              <td>{`00000${order.id}`}</td>
+              <td className="hidden-xs">{order.carrier ? order.carrier : 'No carrier yet'}</td>
+              <td className="hidden-xs">{order.destination}</td>
+              <td className="hidden-xs">{`${order.coverage} USD`}</td>
+              {type !== 'take' && <td>{order.status}</td>}
               <td>
-                <Button onClick={handleTakeOrder}>Take</Button>
+                <Button id={index} onClick={handleShowDetails}>
+                  Details
+                </Button>
               </td>
-            )}
-          </tr>
-          <tr>
-            <td>2</td>
-            <td className="hidden-xs">Carrier2 LTD</td>
-            <td className="hidden-xs">Zelenograd, Savyolkinsky drive, 4c1</td>
-            <td className="hidden-xs">910$</td>
-            {type !== 'take' && <td>On the way</td>}
-            <td>
-              <Button onClick={handleShowModal}>Details</Button>
-            </td>
-            {type === 'take' && (
-              <td>
-                <Button onClick={handleTakeOrder}>Take</Button>
-              </td>
-            )}
-          </tr>
+              {type === 'take' && (
+                <td>
+                  <Button
+                    id={order.id}
+                    onClick={handleTakeOrder}
+                    disabled={order.coverage > availableBalance}
+                  >
+                    Take
+                  </Button>
+                </td>
+              )}
+            </tr>
+          ))}
         </tbody>
       </Table>
       <Table className="hidden-smPlus" striped bordered hover>
         <tbody>
-          <tr>
-            <td>
-              <ItemCard>
-                <div className="TxnInfo_property">
-                  <div className="TxnInfo_label">To address:</div>
-                  <div className="TxnInfo_value">Dmitrovskoe shosse 9</div>
-                </div>
-                <div className="TxnInfo_property">
-                  <div className="TxnInfo_label">Reciever Name:</div>
-                  <div className="TxnInfo_value">Alex</div>
-                </div>
-                <div className="TxnInfo_property">
-                  <div className="TxnInfo_label">Reciever Tel:</div>
-                  <div className="TxnInfo_value">+79999999999</div>
-                </div>
-              </ItemCard>
-              <InputWrapper>
-                {type === 'take' && (
-                  <StyledButton size="sm" onClick={handleTakeOrder}>
+          {orders.map((order, index) => (
+            <tr key={uuidv4()}>
+              <td>
+                <ItemCard>
+                  <div className="TxnInfo_property">
+                    <div className="TxnInfo_label">To address:</div>
+                    <div className="TxnInfo_value">{order.destination}</div>
+                  </div>
+                  <div className="TxnInfo_property">
+                    <div className="TxnInfo_label">Covarage:</div>
+                    <div className="TxnInfo_value">{`${order.coverage} USD`}</div>
+                  </div>
+                  <div className="TxnInfo_property">
+                    <div className="TxnInfo_label">Reward:</div>
+                    <div className="TxnInfo_value">{`${order.reward} USD`}</div>
+                  </div>
+                </ItemCard>
+                <InputWrapper>
+                  {type === 'take' && (
+                  <StyledButton id={order.id} size="sm" onClick={handleTakeOrder} disabled={order.coverage > availableBalance}>
                     Take
                   </StyledButton>
-                )}
-                <StyledButton size="sm" onClick={handleShowModal}>
+                  )}
+                  <StyledButton id={index} size="sm" onClick={handleShowDetails}>
                   Details
-                </StyledButton>
-              </InputWrapper>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <ItemCard>
-                <div className="TxnInfo_property">
-                  <div className="TxnInfo_label">To address:</div>
-                  <div className="TxnInfo_value">Dmitrovskoe shosse 9</div>
-                </div>
-                <div className="TxnInfo_property">
-                  <div className="TxnInfo_label">Reciever Name:</div>
-                  <div className="TxnInfo_value">Alex</div>
-                </div>
-                <div className="TxnInfo_property">
-                  <div className="TxnInfo_label">Reciever Tel:</div>
-                  <div className="TxnInfo_value">+79999999999</div>
-                </div>
-              </ItemCard>
-              <InputWrapper>
-                {type === 'take' && (
-                  <StyledButton size="sm" onClick={handleTakeOrder}>
-                    Take
                   </StyledButton>
-                )}
-                <StyledButton size="sm" onClick={handleShowModal}>
-                  Details
-                </StyledButton>
-              </InputWrapper>
-            </td>
-          </tr>
+                </InputWrapper>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </>

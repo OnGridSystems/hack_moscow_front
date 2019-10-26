@@ -6,18 +6,24 @@ import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 
 import * as UIActions from 'js/actions/UIActions';
+import * as OrderActions from 'js/actions/OrderActions';
 
 import ModalHeader from 'js/components/modals/stateless/ModalHeader';
 import OrderDetails from 'js/components/views/order/OrderDetails';
 
 
-const mapStateToProps = ({ UI }) => ({
+const mapStateToProps = ({ UI, User }) => ({
   modalOptions: UI.get('modalOptions'),
+  role: User.get('role'),
 });
 
 const mapDispatchToProps = dispatch => ({
   hideModal() {
     dispatch(UIActions.hideModal());
+  },
+
+  cancelOrderRequest(payload) {
+    dispatch(OrderActions.cancelOrderRequest(payload));
   },
 });
 
@@ -26,24 +32,29 @@ const mapDispatchToProps = dispatch => ({
   mapDispatchToProps,
 )
 class OrderModal extends Component {
-  static propTypes = {
-    modalOptions: PropTypes.object.isRequired,
+  handleCancelOrder = () => {
+    const { cancelOrderRequest, modalOptions, hideModal } = this.props;
 
-    hideModal: PropTypes.func.isRequired,
-  };
+    cancelOrderRequest(modalOptions.data.id);
+    hideModal();
+  }
 
   render() {
-    const { modalOptions, hideModal } = this.props;
+    const { modalOptions, hideModal, role } = this.props;
 
     return (
       <>
         <ModalHeader handleHideModal={hideModal}>{modalOptions.title}</ModalHeader>
         <ModalContent>
-          <DetailsWrapper order={{}} />
+          <DetailsWrapper order={modalOptions.data} />
+          {role === 'SHIPPER'
+          && (
           <InputWrapper>
             <StyledButton>Notify user</StyledButton>
-            <StyledButton>Cancel order</StyledButton>
+            {modalOptions.data.status === 'NOT_SENT' && <StyledButton onClick={this.handleCancelOrder}>Cancel order</StyledButton> }
           </InputWrapper>
+          )
+          }
         </ModalContent>
       </>
     );

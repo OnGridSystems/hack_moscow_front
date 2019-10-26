@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Table, Button } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 
 import { media } from 'js/constants/media';
 import cropTxnHash from 'js/utils/cropTxnHash';
@@ -13,37 +14,65 @@ import PageTitle from 'js/components/common/PageTitle';
 import OrderDetails from 'js/components/views/order/OrderDetails';
 
 
-const mapStateToProps = ({ User }) => ({});
+const mapStateToProps = ({ Orders }) => ({
+  orderInfo: Orders.get('orderInfo'),
+});
 
 const mapDispatchToProps = dispatch => ({
   confirmDelivery(payload) {
     dispatch(OrderActions.confirmDeliveryRequest(payload));
   },
+  getOrderInfoRequest(payload) {
+    dispatch(OrderActions.getOrderInfoRequest(payload));
+  },
 });
 
+@withRouter
 @connect(
   mapStateToProps,
   mapDispatchToProps,
 )
 class Dashboard extends Component {
+  state = {
+    secret: '',
+  }
+
+  componentDidMount() {
+    const { getOrderInfoRequest, history } = this.props;
+
+    if (!window.location.search.includes('?secret=')) {
+      history.push('/');
+      return;
+    }
+    const secret = window.location.search.split('=')[1]; // TODO: fix this
+    this.setState({ secret });
+
+    getOrderInfoRequest(secret);
+  }
+
   handleConfirm = () => {
     const { confirmDelivery } = this.props;
+    const { secret } = this.state;
 
-    confirmDelivery();
+    confirmDelivery(secret);
   };
 
+
   render() {
-    const { role, showModal, takeOrder } = this.props;
+    const { secret } = this.state;
+    const { orderInfo } = this.props;
 
     return (
       <Wrapper>
         <PageTitle>Order info</PageTitle>
         <DetailsWrapper>
-          <OrderDetails />
+          <OrderDetails order={orderInfo} />
         </DetailsWrapper>
+        {orderInfo.status === 'ON_THE_WAY' && (
         <InputWrapper>
           <Button onClick={this.handleConfirm}>Confirm delivery</Button>
         </InputWrapper>
+        )}
       </Wrapper>
     );
   }

@@ -7,6 +7,7 @@ const initialState = Map({
   activeFiltersTab: 0,
   isMobileSidebarOpened: false,
   isDropdownOpened: false,
+  isPreloaderActive: true,
 
   isModalOpened: false,
   modalType: '',
@@ -22,6 +23,9 @@ const UIReducer = createReducer(
 
     [actions.showDropdown]: (state = initialState) => state.set('isDropdownOpened', true),
     [actions.hideDropdown]: (state = initialState) => state.set('isDropdownOpened', false),
+
+    [actions.showPreloader]: (state = initialState) => state.set('isPreloaderActive', true),
+    [actions.hidePreloader]: (state = initialState) => state.set('isPreloaderActive', false),
 
     [actions.showModal]: (state = initialState, payload = {}) => state
       .set('isModalOpened', true)

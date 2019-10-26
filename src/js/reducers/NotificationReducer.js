@@ -6,6 +6,7 @@ import * as actions from 'js/actions/NotificationActions';
 
 const initialState = Map({
   login: {},
+  register: {},
 });
 
 const NotificationReducer = createReducer(

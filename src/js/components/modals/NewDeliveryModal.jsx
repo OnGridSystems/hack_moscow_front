@@ -29,8 +29,8 @@ const mapDispatchToProps = dispatch => ({
   hideModal() {
     dispatch(UIActions.hideModal());
   },
-  newDeliveryRequest(payload) {
-    dispatch(OrderActions.newDeliveryRequest(payload));
+  createDeliveryRequest(payload) {
+    dispatch(OrderActions.createDeliveryRequest(payload));
   },
   getRewardRequest(payload) {
     dispatch(OrderActions.getRewardRequest(payload));
@@ -78,7 +78,7 @@ class NewDeliveryModal extends Component {
   };
 
   handleStepFour = () => {
-    const { newDeliveryRequest, hideModal } = this.props;
+    const { createDeliveryRequest, hideModal } = this.props;
 
     const {
       coverage,
@@ -88,9 +88,10 @@ class NewDeliveryModal extends Component {
       weight,
       shipmentDate,
       deliveryDate,
+      phone,
     } = this.state;
 
-    newDeliveryRequest({
+    createDeliveryRequest({
       coverage,
       pickupLocation,
       destination,
@@ -98,6 +99,7 @@ class NewDeliveryModal extends Component {
       weight,
       shipmentDate,
       deliveryDate,
+      phone,
     });
 
     hideModal();
@@ -148,6 +150,7 @@ class NewDeliveryModal extends Component {
                 weight: 114,
                 shipmentDate: convertDate(new Date()),
                 deliveryDate: convertDate(new Date()),
+                phone: '+7(999)999-99-99',
               }}
               validationSchema={getValidationSchema('newDeliveryStepTwo')}
               onSubmit={this.handleStepTwo}
@@ -207,6 +210,15 @@ class NewDeliveryModal extends Component {
                         label="Delivery date"
                         type="text"
                         name="deliveryDate"
+                        errors={errors}
+                        touched={touched}
+                      />
+                    </InputWrapper>
+                    <InputWrapper>
+                      <StyledFormikField
+                        label="Phone"
+                        type="text"
+                        name="phone"
                         errors={errors}
                         touched={touched}
                       />
