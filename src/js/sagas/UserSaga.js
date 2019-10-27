@@ -23,6 +23,10 @@ export class UserSaga {
 
       yield put(UserActions.getUserSuccess(response.data));
 
+      if (!isAuthorized) {
+        yield put(AuthActions.setAuthStatus());
+      }
+
       if (response.data.role === 'SHIPPER') {
         yield put(OrderActions.getUserOrdersRequest());
       }
@@ -31,19 +35,11 @@ export class UserSaga {
         yield put(OrderActions.getUserOrdersRequest());
         yield put(OrderActions.getAvailableOrdersRequest());
       }
-
-      if (!isAuthorized) {
-        yield put(AuthActions.setAuthStatus());
-        yield delay(1500);
-        yield put(UIActions.hidePreloader());
-      }
     } catch (e) {
       yield put(UserActions.getUserFail());
       if (isAuthorized) {
         yield put(AuthActions.unsetAuthStatus());
       }
-      yield delay(1500);
-      yield put(UIActions.hidePreloader());
     }
   }
 }

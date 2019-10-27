@@ -7,6 +7,7 @@ import AuthService from 'js/services/AuthService';
 
 import * as AuthActions from 'js/actions/AuthActions';
 import * as UserActions from 'js/actions/UserActions';
+import * as UIActions from 'js/actions/UIActions';
 import * as NotificationActions from 'js/actions/NotificationActions';
 
 
@@ -24,10 +25,14 @@ export class AuthSaga {
       AuthService.setJWT(response.data.token);
 
       yield all([
+        put(UIActions.showPreloader()),
         put(AuthActions.setAuthStatus()),
         put(AuthActions.loginSuccess()),
         put(UserActions.getUserRequest()),
       ]);
+
+      yield delay(1500);
+      yield put(UIActions.hidePreloader());
     } catch (e) {
       yield put(AuthActions.loginFail());
 
@@ -64,10 +69,13 @@ export class AuthSaga {
       AuthService.setJWT(response.data.token);
 
       yield all([
+        put(UIActions.showPreloader()),
         put(AuthActions.setAuthStatus()),
         put(AuthActions.registerSuccess()),
         put(UserActions.getUserRequest()),
       ]);
+      yield delay(1500);
+      yield put(UIActions.hidePreloader());
     } catch (e) {
       yield put(AuthActions.registerFail());
 

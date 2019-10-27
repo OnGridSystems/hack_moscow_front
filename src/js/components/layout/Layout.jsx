@@ -38,6 +38,9 @@ const mapDispatchToProps = dispatch => ({
   hideDropdown() {
     dispatch(UIActions.hideDropdown());
   },
+  hidePreloader() {
+    dispatch(UIActions.hidePreloader());
+  },
 });
 
 @connect(
@@ -45,6 +48,12 @@ const mapDispatchToProps = dispatch => ({
   mapDispatchToProps,
 )
 class Layout extends Component {
+  componentDidMount() {
+    const { hidePreloader } = this.props;
+
+    setTimeout(() => { hidePreloader(); }, 1500);
+  }
+
   handleToggleMobileSidebar = () => {
     const { isMobileSidebarOpened, hideMobileSidebar, openMobileSidebar } = this.props;
     if (isMobileSidebarOpened) {
