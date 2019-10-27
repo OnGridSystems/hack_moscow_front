@@ -113,6 +113,7 @@ const Body = styled.div`
 
 const PreloaderWrapper = styled.div`
   position: fixed;
+  z-index: 9999;
   width: 100vw;
   height: 100vh;
   background: #fff;

@@ -182,7 +182,7 @@ const Wrapper = styled.div`
   box-shadow: 0 10px 21px 0 rgba(173, 182, 217, 0.3);
   background: #fff;
   height: 100%;
-  min-width: 800px;
+  min-width: 900px;
   ${media.smMinus} {
     width: 100%;
     margin: 0;
