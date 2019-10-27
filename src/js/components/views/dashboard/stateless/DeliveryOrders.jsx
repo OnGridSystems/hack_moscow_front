@@ -44,7 +44,7 @@ export default function DeliveryOrders({ orders, type, showModal, takeOrder, ava
           </tr>
         </thead>
         <tbody>
-          {orders.slice().reverse().map((order, index) => (
+          {orders.map((order, index) => (
             <tr key={uuidv4()}>
               <td>{numberPad(order.id)}</td>
               <td className="hidden-xs">{order.carrier ? order.carrier : 'No carrier yet'}</td>
@@ -73,7 +73,7 @@ export default function DeliveryOrders({ orders, type, showModal, takeOrder, ava
       </Table>
       <Table className="hidden-smPlus" striped bordered hover>
         <tbody>
-          {orders.slice().reverse().map((order, index) => (
+          {orders.map((order, index) => (
             <tr key={uuidv4()}>
               <td>
                 <ItemCard>
