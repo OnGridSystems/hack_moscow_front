@@ -1,5 +1,7 @@
 import React from 'react';
 
+import numberPad from 'js/utils/numberPad';
+
 import DivTable from 'js/components/common/DivTable';
 
 
@@ -13,7 +15,7 @@ export default function OrderDetails({ order, ...props }) {
       {order.id && (
         <div className="TxnInfo_property">
           <div className="TxnInfo_label">Delivery ID:</div>
-          <div className="TxnInfo_value">{`00000${order.id}`}</div>
+          <div className="TxnInfo_value">{numberPad(order.id)}</div>
         </div>
       )}
       {order.status && (

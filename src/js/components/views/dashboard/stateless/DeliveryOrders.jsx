@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Table, Button } from 'react-bootstrap';
 import uuidv4 from 'uuid/v4';
 
+import numberPad from 'js/utils/numberPad';
 import { media } from 'js/constants/media';
 
 import DivTable from 'js/components/common/DivTable';
@@ -22,7 +23,7 @@ export default function DeliveryOrders({ orders, type, showModal, takeOrder, ava
     takeOrder(id);
   };
 
-  if (!orders || orders.length === 0) {
+  if (!orders || !Array.isArray(orders) || orders.length === 0) {
     return (
       <NoOrders>No orders</NoOrders>
     );
@@ -43,9 +44,9 @@ export default function DeliveryOrders({ orders, type, showModal, takeOrder, ava
           </tr>
         </thead>
         <tbody>
-          {orders.map((order, index) => (
+          {orders.slice().reverse().map((order, index) => (
             <tr key={uuidv4()}>
-              <td>{`00000${order.id}`}</td>
+              <td>{numberPad(order.id)}</td>
               <td className="hidden-xs">{order.carrier ? order.carrier : 'No carrier yet'}</td>
               <td className="hidden-xs">{order.destination}</td>
               <td className="hidden-xs">{`${order.coverage} USD`}</td>
@@ -72,7 +73,7 @@ export default function DeliveryOrders({ orders, type, showModal, takeOrder, ava
       </Table>
       <Table className="hidden-smPlus" striped bordered hover>
         <tbody>
-          {orders.map((order, index) => (
+          {orders.slice().reverse().map((order, index) => (
             <tr key={uuidv4()}>
               <td>
                 <ItemCard>
